@@ -5,14 +5,16 @@
 <body>
 <h1> Choose the Emotion! </h1><br>
 
-<img id="Picture" src="Happy.png" width="304" height="228"></img>
+<!-- <img id="Picture" src=  width="304" height="228"></img> -->
+<img id="Picture" width="304" height="228" src="Happy.png" onload="this.onload=null; this.src=nextImage();"/>
+
 <div id="imglist">
 	<a href= "javascript:nextImage('Picture')"><img src="images/next_img.png" alt=""></a>
 
 
 <script src="funcSubmit.js"></script>
 
-<form >
+<form>
 <input type="radio" name="choice" value="Happy"> Happy
 <input type="radio" name="choice" value="Excited"> Excited
 <input type="radio" name="choice" value="Loving"> Loving
@@ -20,8 +22,6 @@
 <input type="radio" name="choice" value="Sad"> Sad
 <input type="radio" name="choice" value="Angry"> Angry
 </form>
-
-
 
 
 <button onclick="submitAnswer()">Submit Answer</button>
