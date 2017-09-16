@@ -1,31 +1,46 @@
-<!DOCTYPE html>
-
+<!DOCTYPE HTML>
 <html>
+<head>
+<title> Emotions Quiz </title>
+<script type="text/javascript">
+// From: http://www.codingforums.com/showthread.php?t=228912
 
+var questions = [
+	['../Hackathon/Images/Happy.png','0'],
+	['../Hackathon/Images/Excited.png','1'],
+	['../Hackathon/Images/Angry.png','2'],
+	['../Hackathon/Images/Sad.png','3'],
+	['../Hackathon/Images/Loving.png','4']
+	  // Note: no comma after last entry
+];
+var qNo = 0;
+var correct = 0;
+var cnt = 0;
+
+function NextQuestion(response) {
+  if ((qNo < questions.length) && (response == questions[qNo][1])) { correct++; }
+  document.getElementById('score').innerHTML = 'You had '+correct+' correct answers for '+(cnt+1)+' questions';
+  qNo++;
+  if (qNo < questions.length) { document.getElementById('Pic').src = questions[qNo][0]; cnt++; }
+					     else { alert('Quiz is done'); }
+}
+onload = function() {
+ document.getElementById('Pic').src = questions[0][0];
+}
+
+</script>
+
+</head>
 <body>
-<h1> Choose the Emotion! </h1><br>
-
-<img id="Picture" src="Happy.png" width="304" height="228"></img>
-<div id="imglist">
-	<a href= "javascript:nextImage('Picture')"><img src="images/next_img.png" alt=""></a>
-
-
-<script src="funcSubmit.js"></script>
-
-<form >
-<input type="radio" name="choice" value="Happy"> Happy
-<input type="radio" name="choice" value="Excited"> Excited
-<input type="radio" name="choice" value="Loving"> Loving
-<input type="radio" name="choice" value="Surprised"> Surprised
-<input type="radio" name="choice" value="Sad"> Sad
-<input type="radio" name="choice" value="Angry"> Angry
-</form>
-
-
-
-
-<button onclick="submitAnswer()">Submit Answer</button>
-
+<div align="center">
+<h1>Choose the Correct Emotion!</h1>
+<img src=url(questions[qNo]) id="Pic" height="200" width="250">
+<p> 
+<button onclick="NextQuestion('0')">Happy</button>
+<button onclick="NextQuestion('1')">Excited</button>
+<button onclick="NextQuestion('2')">Angry</button>
+<button onclick="NextQuestion('3')">Sad</button>
+<button onclick="NextQuestion('4')">Loving</button>
+<p>Your score: <br><span id="score"></span>
 </body>
-
 </html>
