@@ -1,0 +1,399 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title> Creating a Pizza </title>
+	<meta name="generator" content="BBEdit 7.0.3" />
+	
+<link rel="Stylesheet" href="../../includes/style.css" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+
+    <style type="text/css">
+		p{font-size:1em;}
+		.caption{font-size:.8em;
+		font-weight:bold;}
+		img{border:solid 1px #000000;}
+		td{vertical-align:top;}
+		#draggable { width: 24px; height: 24px; background: red; }
+#helper { width: 24px; height: 24px; background: yellow; }
+
+ 
+/* Main content area */
+ 
+#gameContent {
+ margin: 10px;
+  font-family: Georgia, serif;
+  line-height: 1.1em;
+  color: #333;
+  margin: 5px 5px;
+  text-align: center;
+}
+ 
+#cardPile {
+  margin: 0 auto;
+  background: #fff;
+}
+ 
+
+#cardSlots {
+  margin: 10px auto 0 auto;
+  background: #99cc33;
+}
+ 
+
+#cardSlots, #cardPile {
+  width: 910px;
+  height: 300px;
+  padding: 12px;
+  border: 2px solid #333;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  -moz-box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
+  -webkit-box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
+  box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
+}
+ 
+/* Individual cards and slots */
+ 
+#cardSlots div, #cardPile div {
+  float: left;
+  width: 170px;
+  height: 80px;
+  padding: 1px;
+  padding-bottom: 0;
+  border: 2px solid #333;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  margin: 10px 5px 0 0px;
+  background: #fff;
+}
+ 
+#cardSlots div:first-child, #cardPile div:first-child {
+  margin-left: 0;
+}
+ 
+#cardSlots div.hovered {
+  background: #aaa;
+}
+ 
+#cardSlots div {
+  border-style: dashed;
+}
+ 
+#cardPile div {
+  background: url("wh1.png");
+  color: #fff;
+  font-size: .8em;
+  text-shadow: 0 2px 2px #000;
+}
+ 
+#cardPile div.ui-draggable-dragging {
+  -moz-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+  -webkit-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+  box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+}
+ 
+/* Individually coloured cards */
+ 
+#card1.correct { background: lightsalmon; }
+#card2.correct { background: lightsalmon; }
+#card3.correct { background: lightsalmon; }
+ 
+ 
+/* "You did it!" message */
+#successMessage {
+  position: absolute;
+  left: 480px;
+  top: 500px;
+  width: 0;
+  height: 0;
+  z-index: 100;
+  background: #ccc;
+  border: 2px solid #333;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  -moz-box-shadow: .3em .3em .5em rgba(0, 0, 0, .8);
+  -webkit-box-shadow: .3em .3em .5em rgba(0, 0, 0, .8);
+  box-shadow: .3em .3em .5em rgba(0, 0, 0, .8);
+  padding: 20px;
+}
+#message {
+  position: absolute;
+  left: 580px;
+  top: 750px;
+  width: 0;
+  height: 0;
+  z-index: 100;
+  background: #fff;
+  border: 2px solid #333;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  -moz-box-shadow: .3em .3em .5em rgba(0, 0, 0, .8);
+  -webkit-box-shadow: .3em .3em .5em rgba(0, 0, 0, .8);
+  box-shadow: .3em .3em .5em rgba(0, 0, 0, .8);
+  padding: 20px;
+}
+		</style>
+
+<script type="text/javascript">
+//<!--
+	title="Creating A Pizza";
+	subject="Level One";
+		var list=new Array("part1");
+	 
+// Usage:
+
+
+
+
+	 function showAnswer(id){
+if(document.getElementById(id).style.display=="none"){
+
+		document.getElementById(id).style.display="";
+	}else{
+	document.getElementById(id).style.display="none";
+	}
+	}
+	  function hideAll(){
+	  for(i=0;i<list.length;i++){
+document.getElementById(list[i]).style.display="none";
+	}
+	}
+	$(function(){
+$("#answers").hide("fast");
+
+     $("#answersToggle").click(function(){
+         $("#answers").toggle("slow");
+      });
+      $("#answer1").hide("fast");
+$("#answer2").hide("fast");
+
+     $("#answer1Toggle").click(function(){
+         $("#answer1").toggle("slow");
+         $("#answer2").hide("fast");
+      });
+      $("#answer2Toggle").click(function(){
+         $("#answer2").toggle("slow");
+         $("#answer1").hide("fast");
+      });
+});
+
+$( init );
+ 
+function init() {
+  $('#makeMeDraggable').draggable();
+
+  $('#draggable').draggable( {
+    cursor: 'move',
+    containment: 'document',
+    helper: helper
+  } );
+}
+
+function helper( event ) {
+  return '<div id="helper" style="font-size:.6em;">drag!</div>';
+}
+
+var correctCards = 0;
+
+$( gameInit );
+ 
+function gameInit() {
+ 
+  // Hide the success message
+  $('#successMessage').hide();
+  $('#successMessage').css( {
+    left: '580px',
+    top: '750px',
+    width: 0,
+    height: 0
+  } );
+  $('#message').hide();
+  $('#message').css( {
+    left: '580px',
+    top: '750px',
+    width: 0,
+    height: 0
+  } );
+  // Reset the game
+  correctCards = 0;
+  $('#cardPile').html( '' );
+  $('#cardSlots').html( '' );
+ var numOfCards=3 ;
+  // Create the pile of shuffled cards
+  var numbers = [ 1, 2, 3];
+  var text = [ 'Roll dough', 
+  'Put on toppings',
+  'Bake the pizza'];
+
+/*var text = [document.getElementById("pic1").src, document.getElementById("pic2").src, document.getElementById("pic3").src]; */
+
+ numbers.sort( function() { return Math.random() - .5 } );
+ 
+  for ( var i=0; i<text.length; i++ ) {
+    $('<div>' + text[numbers[i]-1] + '</div>').data( 'number', numbers[i] ).attr( 'id', 'card'+numbers[i] ).appendTo( '#cardPile' ).draggable( {
+      containment: '#content',
+      stack: '#cardPile div',
+      cursor: 'move',
+      revert: true,
+      start:hideMessage
+      
+    } );
+  }
+ 
+  // Create the card slots
+  var words = [ 'Step One',  'Step Two', 'Step Three'];
+  for ( var i=1; i<=words.length; i++ ) {
+    $('<div>' + words[i-1] + '</div>').data( 'number', i ).appendTo( '#cardSlots' ).droppable( {
+      accept: '#cardPile div',
+      hoverClass: 'hovered',
+      drop: handleCardDrop
+    } );
+  }
+ 
+}
+function handleCardDrop( event, ui ) {
+  var slotNumber = $(this).data( 'number' );
+  var cardNumber = ui.draggable.data( 'number' );
+
+  // If the card was dropped to the correct slot,
+  // change the card colour, position it directly
+  // on top of the slot, and prevent it being dragged
+  // again
+ 
+  if ( slotNumber == cardNumber ) {
+
+  animateMessage();
+    ui.draggable.addClass( 'correct' );
+    ui.draggable.draggable( 'disable' );
+    $(this).droppable( 'disable' );
+    ui.draggable.position( { of: $(this), my: 'left top', at: 'left top' } );
+    ui.draggable.draggable( 'option', 'revert', false );
+    correctCards++;
+    
+  } 
+   
+  // If all the cards have been placed correctly then display a message
+  // and reset the cards for another go
+ 
+  if ( correctCards == 3 ) {
+    $('#successMessage').show();
+    $('#successMessage').animate( {
+      left: '450px',
+      top: '540px',
+      width: '300px',
+      height: '150px',
+      opacity: 1
+    } );
+  }
+ 
+}
+function hideMessage(){
+$('#message').animate( 
+    {
+      left: '220px',
+      top: '700px',
+      width: '600px',
+      height: '100px',
+      opacity: 0
+    });
+}
+function animateMessage(){
+$('#message').animate( 
+    {
+      left: '220px',
+      top: '700px',
+      width: '600px',
+      height: '100px',
+      opacity: 1
+    });
+     
+     }
+//-->
+	</script>
+
+	
+</head>
+<body class="thrColFixHdr">
+<!-- begin address  -->
+<div id="container">
+  <div id="address">
+    <p>
+    <strong>
+    <script src="../../includes/subject.js" type="text/javascript"></script></strong> 
+    <script src="../../includes/year.js" type="text/javascript"></script><br />
+ 
+    </p>
+  </div>
+<!-- end address  --> 
+<!-- begin title  --> 
+<div id="title">
+
+
+  <script src="../../includes/title.js" type="text/javascript"></script>
+
+</div>
+<!-- end title, end ghetto code  -->
+<!-- begin sidebar 1  -->
+ <!-- <div id="sidebar1">
+    <p></p>
+</div>-->
+<!-- end #sidebar1 -->
+<!-- begin #sidebar2 -->
+ <div id="sidebar2">
+    <h3>Navigation</h3>
+    <p>
+   <a href="#" onclick="hideAll();showAnswer('part1');false">Game</a><br /> </div>
+  
+<!-- end #sidebar2 -->
+<!-- begin #maincontent -->  
+
+  <div id="mainContent">
+ <!--Game-->
+
+  <div id="part1" style="display:block;">
+    <h2>Procedural - Interactive Lesson</h2>
+    <br />
+    <br /><h3>Drag and Drop</h3>
+    Follow the steps learned early and put in order the steps to create a pizza
+    <br /><br />
+    
+    <div style="height:50px;"></div>
+    <div id="gameContent">
+ 
+  <div id="cardPile"> </div>
+  <div id="cardSlots"> </div>
+ <div id="message"></div>
+  <div id="successMessage">
+    <span style="font-weight:bold;font-size:2em;">You did it!</span><br />
+    <button onclick="gameInit()">Play Again</button>
+
+    <button onclick="gameInit()">Go </button>
+  </div>
+ 
+</div>
+<div class="sectionBreak"></div>
+
+<!-- DELETED PORTION -->
+
+  </div>
+	<div><small>Source:<br /><a href="http://www.amazon.com/Design-Modeling-Printing-Matthew-Griffin/dp/1449359175">Griffin, Matthew. <em>Design and Modeling for 3D Printing</em>. N.p.: O'Reilly Media, Incorporated, 2014. Print.</a><br /><a href="http://www.elated.com/articles/drag-and-drop-with-jquery-your-essential-guide/">www.elated.com</a><br />
+	<a href="http://individual.troweprice.com/staticFiles/Retail/Shared/PDFs/3D_Printing_Infographic_FINAL.pdf">A BRIEF HISTORY OF 3D PRINTING (n.d.): n. pag. Web. 04 Jan. 2015</a><br />
+<a href="http://lineshapespace.com/history-of-3d-printing/">"History of 3D Printing: It's Older Than You Think." <em>LINESHAPESPACE History of 3D Printing Its Older Than You Are That Is If Youre Under 30 Comments.</em> N.p., 05 Sept. 2014. Web. 04 Jan. 2015.</a><br />
+
+<a href="http://www.zdnet.com/article/the-history-of-3d-printing-a-timeline/">"The History of 3D Printing: A Timeline | ZDNet." ZDNet. N.p., n.d. Web. 04 Jan. 2015.</a>
+<br /><br />
+	</small>
+    <br />     <br /> </div>
+    
+</div>
+	<!-- This clearing element should immediately follow the #mainContent div in order to force the #container div to contain all child floats --><br class="clearfloat" />
+
+<!-- end #container --></div>
+</body>
+</html>
