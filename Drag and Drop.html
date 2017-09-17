@@ -59,16 +59,18 @@
  
 #cardSlots div, #cardPile div {
   float: left;
+  position: relative;
   width: 170px;
-  height: 80px;
-  padding: 1px;
+  height: 170px;
+  padding: 40px;
   padding-bottom: 0;
   border: 2px solid #333;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   border-radius: 10px;
-  margin: 10px 5px 0 0px;
+  margin: 5px 5px 5px 5px;
   background: #fff;
+  background-size: contain;
 }
  
 #cardSlots div:first-child, #cardPile div:first-child {
@@ -84,10 +86,10 @@
 }
  
 #cardPile div {
-  background: url("wh1.png");
   color: #fff;
   font-size: .8em;
   text-shadow: 0 2px 2px #000;
+  background-size: 170px 170px;
 }
  
 #cardPile div.ui-draggable-dragging {
@@ -97,10 +99,7 @@
 }
  
 /* Individually coloured cards */
- 
-#card1.correct { background: lightsalmon; }
-#card2.correct { background: lightsalmon; }
-#card3.correct { background: lightsalmon; }
+
  
  
 /* "You did it!" message */
@@ -121,29 +120,13 @@
   box-shadow: .3em .3em .5em rgba(0, 0, 0, .8);
   padding: 20px;
 }
-#message {
-  position: absolute;
-  left: 580px;
-  top: 750px;
-  width: 0;
-  height: 0;
-  z-index: 100;
-  background: #fff;
-  border: 2px solid #333;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-  -moz-box-shadow: .3em .3em .5em rgba(0, 0, 0, .8);
-  -webkit-box-shadow: .3em .3em .5em rgba(0, 0, 0, .8);
-  box-shadow: .3em .3em .5em rgba(0, 0, 0, .8);
-  padding: 20px;
-}
+
 		</style>
 
 <script type="text/javascript">
 //<!--
 	title="Creating A Pizza";
-	subject="Level One";
+	subject="Level Easy";
 		var list=new Array("part1");
 	 
 // Usage:
@@ -226,18 +209,17 @@ function gameInit() {
   $('#cardSlots').html( '' );
  var numOfCards=3 ;
   // Create the pile of shuffled cards
+
   var numbers = [ 1, 2, 3];
-  var text = [ 'Roll dough', 
-  'Put on toppings',
-  'Bake the pizza'];
+  var img = ['../Hackathon/Images/ep1.png', '../Hackathon/Images/ep2.png','../Hackathon/Images/ep3.png'];
+  
 
-/*var text = [document.getElementById("pic1").src, document.getElementById("pic2").src, document.getElementById("pic3").src]; */
-
- numbers.sort( function() { return Math.random() - .5 } );
- 
-  for ( var i=0; i<text.length; i++ ) {
-    $('<div>' + text[numbers[i]-1] + '</div>').data( 'number', numbers[i] ).attr( 'id', 'card'+numbers[i] ).appendTo( '#cardPile' ).draggable( {
-      containment: '#content',
+  numbers.sort( function() { return Math.random() - .5 } );
+  
+  for ( var i=0; i<img.length; i++ ) {
+	 
+    $('<div><img src=' + img[numbers[i]-1] + '></div>').data( 'number', numbers[i] ).attr( 'id', 'card'+numbers[i] ).appendTo( '#cardPile' ).draggable( {
+      containment: '#gameContent',
       stack: '#cardPile div',
       cursor: 'move',
       revert: true,
@@ -322,35 +304,7 @@ $('#message').animate(
 <body class="thrColFixHdr">
 <!-- begin address  -->
 <div id="container">
-  <div id="address">
-    <p>
-    <strong>
-    <script src="../../includes/subject.js" type="text/javascript"></script></strong> 
-    <script src="../../includes/year.js" type="text/javascript"></script><br />
- 
-    </p>
-  </div>
-<!-- end address  --> 
-<!-- begin title  --> 
-<div id="title">
-
-
-  <script src="../../includes/title.js" type="text/javascript"></script>
-
-</div>
-<!-- end title, end ghetto code  -->
-<!-- begin sidebar 1  -->
- <!-- <div id="sidebar1">
-    <p></p>
-</div>-->
-<!-- end #sidebar1 -->
-<!-- begin #sidebar2 -->
- <div id="sidebar2">
-    <h3>Navigation</h3>
-    <p>
-   <a href="#" onclick="hideAll();showAnswer('part1');false">Game</a><br /> </div>
   
-<!-- end #sidebar2 -->
 <!-- begin #maincontent -->  
 
   <div id="mainContent">
@@ -360,7 +314,7 @@ $('#message').animate(
     <h2>Procedural - Interactive Lesson</h2>
     <br />
     <br /><h3>Drag and Drop</h3>
-    Follow the steps learned early and put in order the steps to create a pizza
+    Follow the steps learned earlier and put in order the steps to create a pizza
     <br /><br />
     
     <div style="height:50px;"></div>
@@ -379,20 +333,7 @@ $('#message').animate(
 </div>
 <div class="sectionBreak"></div>
 
-<!-- DELETED PORTION -->
 
-  </div>
-	<div><small>Source:<br /><a href="http://www.amazon.com/Design-Modeling-Printing-Matthew-Griffin/dp/1449359175">Griffin, Matthew. <em>Design and Modeling for 3D Printing</em>. N.p.: O'Reilly Media, Incorporated, 2014. Print.</a><br /><a href="http://www.elated.com/articles/drag-and-drop-with-jquery-your-essential-guide/">www.elated.com</a><br />
-	<a href="http://individual.troweprice.com/staticFiles/Retail/Shared/PDFs/3D_Printing_Infographic_FINAL.pdf">A BRIEF HISTORY OF 3D PRINTING (n.d.): n. pag. Web. 04 Jan. 2015</a><br />
-<a href="http://lineshapespace.com/history-of-3d-printing/">"History of 3D Printing: It's Older Than You Think." <em>LINESHAPESPACE History of 3D Printing Its Older Than You Are That Is If Youre Under 30 Comments.</em> N.p., 05 Sept. 2014. Web. 04 Jan. 2015.</a><br />
-
-<a href="http://www.zdnet.com/article/the-history-of-3d-printing-a-timeline/">"The History of 3D Printing: A Timeline | ZDNet." ZDNet. N.p., n.d. Web. 04 Jan. 2015.</a>
-<br /><br />
-	</small>
-    <br />     <br /> </div>
-    
-</div>
-	<!-- This clearing element should immediately follow the #mainContent div in order to force the #container div to contain all child floats --><br class="clearfloat" />
 
 <!-- end #container --></div>
 </body>
